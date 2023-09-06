@@ -7,6 +7,8 @@
 
 body {
     margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,4 +41,42 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none;
+}
+
+header {
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+.navbar-style {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.nav-btn {
+    border: solid 1px black;
+    padding: 10px;
+}
+
+.serie-container{
+    margin: auto;
+    margin-top: 50px;
+}
+
+.serie-title {
+    text-align: center;
+    font-weight: 200;
+    margin-bottom: 10px;
+}
+
+p{
+    width: 70%;
 }

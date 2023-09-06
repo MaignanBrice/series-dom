@@ -1,18 +1,81 @@
-
 // 1/ Récupérer en javascript les données sur les séries présentes dans le fichier datas/series.json.
 
+async function fetchingSeriesDatas() {
+    const response = await fetch("/datas/series.json");
+    const seriesData = await response.json();
+
+    displaySeriesStyles(getSeriesStyle(seriesData));
+    seriesData.forEach(function (serie) {
+        displaySerie(serie);
+    });
+};
+
+fetchingSeriesDatas();
 
 // 2/ Créer une fonction pour afficher toutes les séries dans la page avec pour chacune son titre et son image.
+
+function displaySerie(object) {
+    let newContainer = document.createElement('div');
+    let newH2 = document.createElement('h2');
+    let newImg = document.createElement('img');
+    newContainer.classList.add('serie-container');
+    newH2.classList.add('serie-title');
+    newContainer.append(newH2);
+    newContainer.append(newImg);
+    document.querySelector('.container').append(newContainer);
+    newImg.src = object.image;
+    newH2.textContent = object.name;
+};
 
 
 // 3/ Créer une fonction qui retourne la liste des styles de séries présents dans les données.
 
+function getSeriesStyle(arrayObject) {
+    let styleArray = [];
+    arrayObject.forEach((object) => {
+        object.styles.forEach((value) => {
+            styleArray.push(value);
+        });
+    })
+    let styleObject = styleArray.reduce(function (acc, curr) {
+        if (acc[curr] == undefined) {
+            acc[curr] = 1;
+        }
+        acc[curr] += 1;
+        return acc;
+    }, {});
+    return styleObject;
+}
 
 // 4/ Créer une fonction qui affiche la liste des styles de séries.
+
+function displaySeriesStyles(object) {
+    
+    Object.keys(object).forEach((value) => {
+        const newLi = document.createElement('li');
+        const newA = document.createElement('a');
+        newA.classList.add('nav-btn');
+        newA.textContent = `${value}(${object[value]})`;
+        newLi.appendChild(newA);
+        document.querySelector('#navbar-list').appendChild(newLi);
+    });
+}
 
 
 // 5/ Créer une fonction qui compte le nombre de séries d'un style.
 
+function countOccurenceOfStyle(arrayOfObject, style) {
+    let styleArray = [];
+    arrayOfObject.forEach((object) => {
+        object.styles.forEach((value) => {
+            styleArray.push(value);
+        });
+    });
+
+    let result = styleArray.reduce
+
+    return result;
+}
 
 // 6/ Affichez dans la liste des styles le nombre de séries corresondantes entre parenthèse.
 //      Modifier la fonction de la question 4/
