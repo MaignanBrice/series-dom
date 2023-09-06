@@ -8,6 +8,9 @@ async function fetchingSeriesDatas() {
     seriesData.forEach(function (serie) {
         displaySerie(serie);
     });
+
+    underlineOnClic();
+
 };
 
 fetchingSeriesDatas();
@@ -50,32 +53,24 @@ function getSeriesStyle(arrayObject) {
 // 4/ Créer une fonction qui affiche la liste des styles de séries.
 
 function displaySeriesStyles(object) {
-    
+
     Object.keys(object).forEach((value) => {
         const newLi = document.createElement('li');
         const newA = document.createElement('a');
+
         newA.classList.add('nav-btn');
         newA.textContent = `${value}(${object[value]})`;
         newLi.appendChild(newA);
+
         document.querySelector('#navbar-list').appendChild(newLi);
     });
+    document.querySelector('#navbar-list li').firstElementChild.classList.add('active-btn');
 }
 
 
 // 5/ Créer une fonction qui compte le nombre de séries d'un style.
 
-function countOccurenceOfStyle(arrayOfObject, style) {
-    let styleArray = [];
-    arrayOfObject.forEach((object) => {
-        object.styles.forEach((value) => {
-            styleArray.push(value);
-        });
-    });
-
-    let result = styleArray.reduce
-
-    return result;
-}
+// 
 
 // 6/ Affichez dans la liste des styles le nombre de séries corresondantes entre parenthèse.
 //      Modifier la fonction de la question 4/
@@ -83,10 +78,26 @@ function countOccurenceOfStyle(arrayOfObject, style) {
 
 // 7/ Créer une fonction qui retourne les ID des séries d'un style.
 
+function getSeriesIdFromStyle(object, style) {
+    let idList = [];
+    object.forEach((value, index) => {
+        if (value.styles.includes(style)) {
+            idList.push({ title: value.name, id: value.id })
+        }
+    })
+    return idList;
+}
 
 // 8/ Créer une fonction qui souligne le dernier style cliqué.
 // Un seul style doit rester souligné à la fois.
 
+function underlineOnClic() {
+    document.querySelector('#navbar-list').addEventListener('click', function (event) {
+        if (!event.target.classList.contains('nav-btn')) return;
+        document.querySelector('#navbar-list li .active-btn').classList.remove('active-btn');
+        event.target.classList.add('active-btn')
+    });
+};
 
 // 9/ Créer une fonction pour retirer le soulignement de tous les styles.
 

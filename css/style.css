@@ -80,3 +80,7 @@ header {
 p{
     width: 70%;
 }
+
+.active-btn {
+    text-decoration: underline;
+}
