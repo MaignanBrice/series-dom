@@ -61,16 +61,17 @@ header {
     justify-content: space-between;
 }
 
-
 .navbar-style {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
 .nav-btn {
     border: solid 1px black;
     padding: 10px;
+    margin: 5px;
 }
 
 .serie-container {
@@ -90,4 +91,21 @@ p {
 
 .active-btn {
     text-decoration: underline;
+}
+
+.fav-container {
+    display: flex;
+    justify-content: center;
+    font-weight: 200;
+}
+
+.fav-container div,
+.fav-container h2{
+    margin: 15px;
+    padding: 5px;
+}
+
+.filter-list {
+    display: flex;
+    justify-content: center;
 }

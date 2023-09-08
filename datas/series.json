@@ -7,7 +7,7 @@
       "availableOn": "Netflix",
       "styles": [
          "Aventure",
-         "Sciencefiction",
+         "ScienceFiction",
          "Action",
          "Animation"
       ],
@@ -358,7 +358,7 @@
       "styles": [
          "Drame",
          "Western",
-         "Sciencefiction",
+         "ScienceFiction",
          "Thriller"
       ],
       "createdBy": [

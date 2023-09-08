@@ -1,15 +1,26 @@
 // 1/ Récupérer en javascript les données sur les séries présentes dans le fichier datas/series.json.
 
+localStorage.setItem("favorite", "");
+
+
 async function fetchingSeriesDatas() {
     const response = await fetch("/datas/series.json");
     const seriesData = await response.json();
+
+    getIdSortedByDate(seriesData)
 
     displaySeriesStyles(getSeriesStyle(seriesData));
     seriesData.forEach(function (serie) {
         displaySerie(serie);
     });
+
     displaySerieByStyle(seriesData);
-    getIdOnClick();
+    getIdOnClick(seriesData);
+    removeFavoriteOnClic();
+
+    filterByClic(seriesData);
+
+
 };
 
 fetchingSeriesDatas();
@@ -28,7 +39,7 @@ function displaySerie(object) {
     document.getElementById("main-container").append(newContainer);
     newImg.src = object.image;
     newImg.id = object.id;
-    newImg.classList.add('serie-img')
+    newImg.classList.add('serie-img');
     newH2.textContent = object.name;
 };
 
@@ -62,12 +73,12 @@ function displaySeriesStyles(object) {
 
     Object.keys(object).forEach((value) => {
         const newLi = document.createElement('li');
-        const newA = document.createElement('a');
+        const newBtn = document.createElement('button');
 
-        newA.classList.add('nav-btn');
-        newA.id = (value);
-        newA.textContent = `${value}(${object[value]})`;
-        newLi.appendChild(newA);
+        newBtn.classList.add('nav-btn');
+        newBtn.id = (value);
+        newBtn.textContent = `${value}(${object[value]})`;
+        newLi.appendChild(newBtn);
 
         document.querySelector('#navbar-list').appendChild(newLi);
     });
@@ -125,7 +136,7 @@ function displaySerieByStyle(object) {
 
 function removeAllUnderlineFromBtn() {
     document.querySelector('#navbar-list li .active-btn').classList.remove('active-btn');
-}
+};
 
 // 10/ Créer une fonction qui affiche dans la page uniquement les séries dont l'id est en paramètre.
 
@@ -140,51 +151,118 @@ function displaySerieFromId(object, identifiant) {
 
 // 12/ Créer une fonction qui retourne toutes les données d'une série à partir de sont ID.
 
-function getSerieInfoById (object, identifiant) {
-    parseInt(identifiant);
- 
-    let serie = object.filter(serie => serie.id === identifiant);
-    return serie[0];
+function consoleSerieInfo(object, identifiant) {
+    object.forEach(function (serie) {
+        console.log('              ');
+        for (const info in serie) {
+            if (serie.id == identifiant) {
+                console.info(`${info} : ${serie[info]}`);
+            }
+        }
+    });
 }
 
 
 // 13/ Créer une fonction qui permet qu'au clic sur une série, on affiche son id dans la console.
-
-function getIdOnClick(){
-    document.querySelector("#main-container").addEventListener('click', function(event) {
-        if(!event.target.classList.contains('serie-img')) return;
-        console.log(event.target.id);
-    });
-}
 // 14/ Modifier la fonction ci-dessus pour retourner toutes les infos de la serie cliquée dans la console.
+// 16/ Créer une fonction pour ajouter une série en favori au clic.
 
+
+function getIdOnClick(object) {
+    document.querySelector("#main-container").addEventListener('click', function (event) {
+        if (!event.target.classList.contains('serie-img')) return;
+        consoleSerieInfo(object, event.target.id);
+        displayFavorite(addToFavourite(object, event.target.id));
+
+    });
+
+}
 
 // 15/ Créer une fonction permettant d'ajouter une série à une liste de favoris dans un array.
 // Une série ne peut être présente qu'une fois dans le tableau.
 
-
-// 16/ Créer une fonction pour ajouter une série en favori au clic.
+function addToFavourite(object, identifiant) {
+    let serieName;
+    object.forEach(function (serie) {
+        if (serie.id == identifiant) serieName = serie.name;
+    });
+    return serieName;
+};
 
 
 // 17/ Créer une fonction qui affiche le nom des séries favorites dans la page.
+// 20/ Créer une fonction qui affiche le nombre de favoris en titre de la liste des favoris.
+
+function displayFavorite(name) {
+    let fullName = name;
+    name = name.split(' ');
+    name = name.join('');
+    if (document.querySelector(`#${name}`) !== null) return;
+    const newDiv = document.createElement('div');
+    const newP = document.createElement('p');
+    newP.classList.add('favorite-name');
+    newP.id = name;
+    newDiv.appendChild(newP);
+    newP.textContent += fullName + ' ';
+    document.querySelector('#favorite').appendChild(newDiv);
+    document.querySelector('#favorite-counter').textContent++;
+}
 
 
 // 18/ Créer une fonction permettant de retirer une série de la liste des favoris de par son id.
-
-
 // 19/ Créer une fonction qui fasse qu'au clic sur un favori il se retire de la liste des favoris.
 
-
-// 20/ Créer une fonction qui affiche le nombre de favoris en titre de la liste des favoris.
-
+function removeFavoriteOnClic() {
+    document.querySelector('#favorite').addEventListener('click', function (event) {
+        if (!event.target.classList.contains('favorite-name')) return;
+        event.target.remove();
+        document.querySelector('#favorite-counter').textContent--;
+    });
+};
 
 // 21/ Créer une fonction qui retourne les id des séries par ordre d'année de sortie.
 
+function getIdSortedByDate(object) {
+    let idDate = [];
+    object.forEach(function (serie) {
+        idDate.push({ id: serie.id, date: serie.launchYear })
+    });
 
+    idDate.sort((a, b) => {
+        if (a.date < b.date)
+            return -1;
+        if (a.date > b.date)
+            return 1;
+        return 0;
+    });
+
+    idDate.forEach((serie, index) => idDate[index] = serie.id);
+
+    return idDate;
+
+}
 // 22/ Créer une fonction qui affiche les séries dans la page dans l'ordre des ids passés en paramètre.
 
+function sortSerieByDate(object, array) {
+    for (const id of array) {
+        object.forEach(function (serie) {
+            displaySerieFromId(serie, id);
+        });
+    };
+};
 
 // 23/ Créer une fonction qui permet de gérer au click sur un lien dans la page le tri des series par années croissantes.
+
+function filterByClic(object) {
+    document.querySelector('#serie-filter').addEventListener('click', function (event) {
+        if (!event.target.classList.contains('filter-btn')) return;
+
+        document.querySelectorAll("#container").forEach(function (container) {
+            container.remove();
+        });
+        sortSerieByDate(object, getIdSortedByDate(object));
+    });
+}
 
 
 // 24/ Permettez à la fonction précédente de gérer un click sur un autre lien pour trier les series par années décroissantes.
