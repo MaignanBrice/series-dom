@@ -7,7 +7,7 @@
       "availableOn": "Netflix",
       "styles": [
          "Aventure",
-         "Science fiction",
+         "Sciencefiction",
          "Action",
          "Animation"
       ],
@@ -255,7 +255,7 @@
       "availableOn": "Netflix",
       "styles": [
          "Aventure",
-         "Comédie",
+         "Comedie",
          "Animation"
       ],
       "createdBy": [
@@ -358,7 +358,7 @@
       "styles": [
          "Drame",
          "Western",
-         "Science fiction",
+         "Sciencefiction",
          "Thriller"
       ],
       "createdBy": [
@@ -383,7 +383,7 @@
       "country": "U.S.A.",
       "availableOn": "Amazon",
       "styles": [
-         "Comédie",
+         "Comedie",
          "Drame"
       ],
       "createdBy": [
@@ -408,7 +408,7 @@
       "availableOn": "ADN",
       "styles": [
          "Aventure",
-         "Comédie",
+         "Comedie",
          "Animation"
       ],
       "createdBy": [

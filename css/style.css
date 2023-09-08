@@ -54,7 +54,7 @@ header {
     padding: 20px;
 }
 
-.container {
+.main-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
