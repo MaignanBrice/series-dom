@@ -1,4 +1,3 @@
-
 /* NORMALIZER */
 
 * {
@@ -11,7 +10,12 @@ body {
     width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
     padding: 0;
 }
@@ -21,7 +25,10 @@ p {
     padding: 0;
 }
 
-ul, dl, dt, dd {
+ul,
+dl,
+dt,
+dd {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -66,7 +73,7 @@ header {
     padding: 10px;
 }
 
-.serie-container{
+.serie-container {
     margin: auto;
     margin-top: 50px;
 }
@@ -77,7 +84,7 @@ header {
     margin-bottom: 10px;
 }
 
-p{
+p {
     width: 70%;
 }
 

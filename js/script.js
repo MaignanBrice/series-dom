@@ -6,11 +6,12 @@ async function fetchingSeriesDatas() {
 
     displaySeriesStyles(getSeriesStyle(seriesData));
     seriesData.forEach(function (serie) {
-        displaySerie(serie);
+        // displaySerie(serie);
+        displaySerieFromId(serie, 2);
+
     });
-
+    console.log(getSeriesIdFromStyle(seriesData, "Aventure"));
     underlineOnClic();
-
 };
 
 fetchingSeriesDatas();
@@ -82,7 +83,7 @@ function getSeriesIdFromStyle(object, style) {
     let idList = [];
     object.forEach((value, index) => {
         if (value.styles.includes(style)) {
-            idList.push({ title: value.name, id: value.id })
+            idList.push({id: value.id})
         }
     })
     return idList;
@@ -94,16 +95,25 @@ function getSeriesIdFromStyle(object, style) {
 function underlineOnClic() {
     document.querySelector('#navbar-list').addEventListener('click', function (event) {
         if (!event.target.classList.contains('nav-btn')) return;
-        document.querySelector('#navbar-list li .active-btn').classList.remove('active-btn');
+
+        removeAllUnderlineFromBtn();
         event.target.classList.add('active-btn')
     });
 };
 
 // 9/ Créer une fonction pour retirer le soulignement de tous les styles.
 
+function removeAllUnderlineFromBtn(){
+    document.querySelector('#navbar-list li .active-btn').classList.remove('active-btn');
+}
 
 // 10/ Créer une fonction qui affiche dans la page uniquement les séries dont l'id est en paramètre.
 
+function displaySerieFromId(object, identifiant) {
+    
+    if (parseInt(identifiant) !== object.id) return;
+    displaySerie(object);
+}
 
 // 11/ Modifier la fonction de la question 8/ pour n'afficher que les series du style souligné.
 
